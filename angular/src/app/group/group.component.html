@@ -1,1 +1,29 @@
-
+<div class="container">
+  <table cellspacing='0'>
+      <thead>
+          <tr>
+              <th colspan=3>
+                  <div [style.font-size.em]='2'>Grupos</div>
+              </th>
+          </tr>
+          <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Usuarios</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let group of groups">
+              <td>{{group.name}}</td>
+              <td>{{group.description}}</td>
+              <td>{{group.users}}</td>
+              <td class="text">
+                  <img src="/assets/edit.png" name="editar" [routerLink]="['/nuevoGrupo/' + group._id ]" />
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <button class="btn btn-success" [routerLink]="['/nuevoGrupo']">Nueva</button>
+  <button class="btn btn-default" [routerLink]="['/']">Volver</button>
+</div>

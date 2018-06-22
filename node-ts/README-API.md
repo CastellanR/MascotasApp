@@ -85,7 +85,7 @@ Grupo
 {
   "name": "Nombre del grupo",
   "description": "Descripción del grupo",
-  "owner": "Id de usuario",
+  "owner": "Nombre de usuario",
   "users": [user]
   "updated": date (DD/MM/YYYY),
   "created": date (DD/MM/YYYY),
@@ -160,7 +160,7 @@ Grupo
 {
   "name": "Nombre del grupo",
   "description": "Descripción del grupo",
-  "owner": "Id de usuario",
+  "owner": "Nombre de usuario",
   "users": [user]
   "updated": date (DD/MM/YYYY),
   "created": date (DD/MM/YYYY),
@@ -243,7 +243,7 @@ Grupo
 {
   "name": "Nombre del grupo",
   "description": "Descripción del grupo",
-  "owner": "Id de usuario",
+  "owner": "Nombre de usuario",
   "users": [user]
   "updated": date (DD/MM/YYYY),
   "created": date (DD/MM/YYYY),

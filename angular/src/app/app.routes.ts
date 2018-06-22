@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterModule, RouterStateS
 import { MascotaComponent } from "./mascota/mascota.component";
 import { NuevaMascotaComponent } from "./mascota/nueva-mascota.component";
 import { GroupComponent } from "./group/group.component";
+import { NewGroupComponent } from "./group/new-group.component";
 import { PerfilComponent } from "./perfil/perfil.component";
 import { RegistrarUsuarioComponent } from "./usuario/registrar-usuario.component";
 import { UsuarioService } from "./usuario/usuario.service";
@@ -31,9 +32,11 @@ export const routes: Routes = [
     { path: "perfilUsuario", component: PerfilComponent, canActivate: [LoggedIn] },
     { path: "registrarUsuario", component: RegistrarUsuarioComponent },
     { path: "mascotas", component: MascotaComponent, canActivate: [LoggedIn] },
-    { path: "group", component: GroupComponent, canActivate: [LoggedIn]},
     { path: "nuevaMascota/:id", component: NuevaMascotaComponent, canActivate: [LoggedIn] },
-    { path: "nuevaMascota", component: NuevaMascotaComponent, canActivate: [LoggedIn] }
+    { path: "nuevaMascota", component: NuevaMascotaComponent, canActivate: [LoggedIn] },
+    { path: "grupos", component: GroupComponent, canActivate: [LoggedIn]},
+    { path: "nuevoGrupo/:id", component: NewGroupComponent, canActivate: [LoggedIn] },
+    { path: "nuevoGrupo", component: NewGroupComponent, canActivate: [LoggedIn] }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
