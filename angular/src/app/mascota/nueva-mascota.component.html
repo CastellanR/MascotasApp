@@ -1,0 +1,43 @@
+<h1>{{mascota._id ? "Editar Mascota" : 'Nueva Mascota' }}</h1>
+
+<form #f="ngForm" novalidate>
+    <div class="form-group">
+        <label>Nombre:</label>
+
+        <input type="text" class="form-control" name="name" [class.errorBorder]="errors['name']" [(ngModel)]="mascota.name" required>
+
+        <div *ngIf="f.controls.name?.invalid && f.controls.name?.touched" class="error">
+            Dato invalido
+        </div>
+
+        <div *ngIf="errors.name" class="error">
+            {{errors.name}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Fecha de Nacimiento:</label>
+        <ng-datepicker class="form-control" name="birthDate" [options]="{ displayFormat: 'DD/MM/YYYY', locale : arLocale, barTitleIfEmpty: 'Click para seleccionar'}" [(ngModel)]="mascota.birthDate" [class.errorBorder]="!mascota.birthDate || errors['birthDate']"></ng-datepicker>
+
+        <div *ngIf="errors.birthDate" class="error">
+            {{errors.birthDate}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Descripcion:</label>
+        <input type="text" class="form-control" name="description" [class.errorBorder]="errors['description']" [(ngModel)]="mascota.description" required [minlength]="3" [maxLength]="60">
+
+        <div *ngIf="f.controls.description?.errors?.minlength && f.controls.description?.touched" class="error">
+            Minimo 3 caracters, maximo 60
+        </div>
+
+        <div *ngIf="errors.description" class="error">
+            {{errors.description}}
+        </div>
+    </div>
+
+    <button class="btn btn-default" [routerLink]="['/mascotas']">Cancelar</button>
+    <button class="btn btn-warning" *ngIf="mascota._id" (click)="onDelete()">Eliminar</button>
+    <button class="btn btn-success" (click)="submitForm()" [disabled]="f.invalid">Guardar</button>
+</form>

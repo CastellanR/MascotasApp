@@ -1,0 +1,32 @@
+Meter una libreria de cambio de tamaño de imagen.
+http://sharp.dimens.io/en/stable/install/
+
+La idea es que las imagenes se guarden como referencia en la db de mongo, y en riak el documento, 
+que puedan tener varios tipos
+
+web_thumbnail
+web_optimized
+
+mdpi_thumbnail
+hdpi_thumbnail
+xhdpi_thumbnail
+xxhdpi_thumbnail
+xxxhdpi_thumbnail
+mdpi_optimized
+hdpi_optimized
+xxhdpi_optimized
+xxxhdpi_optimized
+
+original
+
+Cuando el usuario solicita la imagen, la idea es que pueda espcificar el formato de salida
+si la imagen no lo tiene, se genera el formato, luego se guarda en la db y queda la referencia
+con la referencia ya no nos hace falta mas generarla la proxima
+
+
+-----------------------------------------------------
+
+
+Indice de los servicios rest en index.html ?
+
+

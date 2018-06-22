@@ -1,0 +1,54 @@
+<div class="pageHeader">
+
+    <div class='inlineContent menu' *ngIf="usuarioLogueado">
+        <input type="button" class="menuButton" [routerLink]="['/']" value="Home" />
+    </div>
+
+    <div class='inlineContent menu' *ngIf="usuarioLogueado">
+        <input type="button" class="menuButton" [routerLink]="['/perfilUsuario']" value="Perfil" />
+    </div>
+
+
+    <div class='inlineContent menu' *ngIf="usuarioLogueado">
+        <input type="button" class="menuButton" [routerLink]="['/mascotas']" value="Mascotas" />
+    </div>
+
+    <div class='inlineContent menu' *ngIf="usuarioLogueado">
+      <input type="button" class="menuButton" [routerLink]="['/group']" value="Grupos" />
+  </div>
+
+    <div class='inlineContent userLoggedIn' *ngIf="usuarioLogueado">
+        <img src="assets/logout.png" class="errorIcon" alt="Cerrar sesi&oacute;n" title="Cerrar sesi&oacute;n" (click)="logout()" /> <label> {{ usuarioLogueado.name }}
+		</label>
+    </div>
+
+    <form name="form" [formGroup]="loginForm" *ngIf="!usuarioLogueado">
+        <div class='inlineContent'>
+            <label> Login </label>
+        </div>
+
+        <div class='inlineContent'>
+            <input name="login" formControlName="username" type="text" placeholder="Usuario" />
+
+            <img src="assets/error.png" *ngIf="loginForm.controls.username.dirty && !loginForm.controls.username.valid" class="errorIcon" alt="Ingrese su nombre de usuario." title="Ingrese su nombre de usuario." />
+        </div>
+
+        <div class='inlineContent'>
+            <input name="password" formControlName="password" type="password" />
+
+            <img src="assets/error.png" *ngIf="loginForm.controls.password.dirty && !loginForm.controls.password.valid" class="errorIcon" alt="Contraseña no valida." title="Contraseña no valida." />
+        </div>
+
+        <div class='inlineContent'>
+            <img src="assets/error.png" *ngIf="errorMessage" class="errorIcon" [alt]="errorMessage" [title]="errorMessage" />
+        </div>
+
+        <div class='inlineContent'>
+            <input type="button" [routerLink]="['/registrarUsuario']" class="barFormBack" value="Registrarse" />
+        </div>
+
+        <div class='inlineContent'>
+            <input type="button" class="barFormButton" (click)="login()" value="Login" [disabled]="!loginForm.valid" />
+        </div>
+    </form>
+</div>

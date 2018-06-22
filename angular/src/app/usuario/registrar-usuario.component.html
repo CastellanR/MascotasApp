@@ -1,0 +1,69 @@
+<h1>Reg&iacute;strate</h1>
+
+<form name="form" [formGroup]="form">
+
+    <div class="form-group">
+        <label>Login</label>
+
+        <input name="login" formControlName="login" type="text" placeholder="Login" size="60" class="form-control" />
+
+        <div *ngIf="(form.controls.login.dirty || formSubmitted) && form.controls.login.invalid" class="error">
+            Dato invalido
+        </div>
+
+        <div *ngIf="errors.login" class="error">
+            {{errors.login}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Nombre</label>
+
+        <input name="name" formControlName="name" type="text" placeholder="Nombre" size="60" class="form-control" />
+
+        <div *ngIf="(form.controls.name.dirty || formSubmitted) && form.controls.name.invalid" class="error">
+            Dato invalido
+        </div>
+
+        <div *ngIf="errors.name" class="error">
+            {{errors['name']}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Contrase&ntilde;a</label>
+
+        <input name="password" formControlName="password" type="password" placeholder="Password" size="60" class="form-control" />
+
+        <div *ngIf="(form.controls.password.dirty || formSubmitted) && form.controls.password.invalid" class="error">
+            Dato invalido
+        </div>
+
+        <div *ngIf="errors.password" class="error">
+            {{errors.password}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Repetir Contrase&ntilde;a</label>
+
+        <input name="password2" formControlName="password2" type="password" placeholder="Password2" size="60" class="form-control" />
+
+        <div *ngIf="(form.controls.password2.dirty || formSubmitted) && form.controls.password2.invalid" class="error">
+            Dato invalido
+        </div>
+
+        <div *ngIf="errors.password2" class="error">
+            {{errors.password2}}
+        </div>
+    </div>
+
+
+    <div *ngIf="errorMessage" class="error">
+        {{errorMessage}}
+    </div>
+
+    <button class="btn btn-default" [routerLink]="['/']">Volver</button>
+    <button class="btn btn-success" (click)="submitForm()" [disabled]="form.invalid">Guardar</button>
+
+</form>
