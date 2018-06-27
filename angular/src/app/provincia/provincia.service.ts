@@ -23,6 +23,22 @@ export class ProvinciaService extends RestBaseService {
       })
       .catch(this.handleError);
   }
+
+  guardarProvincia(value: Provincia): Promise<Provincia> {
+    return this.http
+      .post(
+        ProvinciaService.serverUrl + this.provinciasUrl,
+        JSON.stringify(value),
+        this.getRestHeader()
+      )
+      .toPromise()
+      .then(response => {
+        return response.json() as Provincia;
+      })
+      .catch(this.handleError);
+  }
+
+
 }
 
 export interface Provincia {

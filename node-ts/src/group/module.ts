@@ -14,6 +14,6 @@ export function init(app: Express) {
   app
     .route("/group/:groupId")
     .get(group.findByID, group.read)
-    .put(passport.authenticate("jwt", { session: false }), group.findByID, group.validateOwner, group.validateUpdate, group.update)
+    .put(passport.authenticate("jwt", { session: false }), group.findByID, group.validateUpdate, group.update)
     .delete(passport.authenticate("jwt", { session: false }), group.findByID, group.validateOwner, group.remove);
 }

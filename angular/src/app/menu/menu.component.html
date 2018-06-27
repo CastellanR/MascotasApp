@@ -8,6 +8,9 @@
         <input type="button" class="menuButton" [routerLink]="['/perfilUsuario']" value="Perfil" />
     </div>
 
+    <div class='inlineContent menu' *ngIf="usuarioLogueado">
+      <input type="button" class="menuButton" [routerLink]="['/mensajes']" value="Mensajes" />
+    </div>
 
     <div class='inlineContent menu' *ngIf="usuarioLogueado">
         <input type="button" class="menuButton" [routerLink]="['/mascotas']" value="Mascotas" />

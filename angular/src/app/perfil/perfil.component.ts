@@ -17,10 +17,8 @@ export class PerfilComponent implements OnInit, IErrorController {
   errors: string[] = [];
 
   provincias: Provincia[];
-
   perfil: Perfil;
   imagenPerfil: Image;
-
   imagen: Image;
 
   constructor(
@@ -36,7 +34,8 @@ export class PerfilComponent implements OnInit, IErrorController {
       province: "",
       address: "",
       picture: "",
-      phone: ""
+      phone: "",
+      user: "",
     };
     this.imagen = {
       image: ""

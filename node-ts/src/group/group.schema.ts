@@ -6,6 +6,7 @@ export interface IGroup extends mongoose.Document {
   name: string;
   description: string;
   owner: mongoose.Schema.Types.ObjectId;
+  owner_name: string;
   users: [mongoose.Schema.Types.ObjectId];
   updated: Number;
   created: Number;
@@ -13,7 +14,7 @@ export interface IGroup extends mongoose.Document {
 }
 
 /**
- * Esquema de Mascotas
+ * Esquema de Grupo
  */
 export let GroupSchema = new mongoose.Schema({
   name: {
@@ -29,7 +30,12 @@ export let GroupSchema = new mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Owner",
+    ref: "User",
+  },
+  owner_name: {
+    type: String,
+    default: "",
+    trim: true
   },
   users: {
     type: [mongoose.Schema.Types.ObjectId],

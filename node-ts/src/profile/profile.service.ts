@@ -179,6 +179,21 @@ export function fillForCurrentUser(req: IFindByCurrentUserRequest, res: express.
 }
 
 /**
+ *  Busca todos los perfiles
+ */
+
+export interface IFindRequest extends IUserSessionRequest {
+  profiles: IProfile[];
+}
+export function findAll(req: IFindRequest, res: express.Response, next: NextFunction) {
+  Profile.find().exec(function (err, profiles) {
+    if (err) return next();
+    res.json(profiles);
+    console.log(profiles);
+  });
+}
+
+/**
  * Filtro, busca una provincia que viene en el parámetro del body al guardar el perfil.
  * La provincia es agregada al request.
  */

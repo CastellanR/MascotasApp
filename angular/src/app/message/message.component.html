@@ -1,3 +1,57 @@
-<p>
-  message works!
-</p>
+<div class="container" *ngIf="isDataAvailable">
+  <div class="buttons">
+    <button class="btn btn-success" [routerLink]="['/nuevoMensaje']">Nuevo</button>
+    <button class="btn btn-default" [routerLink]="['/']">Volver</button>
+  </div>
+  <table cellspacing='0'>
+      <thead>
+          <tr>
+              <th colspan=3>
+                  <div [style.font-size.em]='2'>Mensajes Recibidos</div>
+              </th>
+          </tr>
+          <tr>
+              <th>De</th>
+              <th>Descripcion</th>
+              <th>Fecha</th>
+              <th>Accion</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let message of messagesReceived">
+              <td>{{ message.from_user }}</td>
+              <td>{{ message.content }}</td>
+              <td>{{ message.created }}</td>
+              <td class="text" id="title">
+                <a (click)="deleteMessage(message._id)"><img src="/assets/delete.png" class="image"> Borrar</a>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <table cellspacing='0'>
+    <thead>
+        <tr>
+            <th colspan=3>
+                <div [style.font-size.em]='2'>Mensajes Enviados</div>
+            </th>
+        </tr>
+        <tr>
+            <th>Hacia</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let message of messagesSended">
+            <td>{{ message.to_user }}</td>
+            <td>{{ message.content }}</td>
+            <td>{{ message.created }}</td>
+            <td class="text" id="title">
+              <a (click)="deleteMessage(message._id)"><img src="/assets/delete.png" class="image"> Borrar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+

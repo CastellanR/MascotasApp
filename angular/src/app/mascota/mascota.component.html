@@ -1,28 +1,38 @@
-<div class="container">
-    <table cellspacing='0'>
-        <thead>
-            <tr>
-                <th colspan=3>
-                    <div [style.font-size.em]='2'>Mascotas</div>
-                </th>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- ngFor en el click del renglon se ejecuta un metodo, se le pasa la mascota actual -->
-            <tr *ngFor="let mascota of mascotas">
-                <td>{{mascota.name}}</td>
-                <td>{{mascota.description}}</td>
-                <td class="text">
-                    <img src="/assets/edit.png" name="editar" [routerLink]="['/nuevaMascota/' + mascota._id ]" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container" *ngIf="isDataAvailable">
+  <div class="buttons">
     <button class="btn btn-success" [routerLink]="['/nuevaMascota']">Nueva</button>
     <button class="btn btn-default" [routerLink]="['/']">Volver</button>
+  </div>
+  <table cellspacing='0'>
+      <thead>
+          <tr>
+              <th colspan=3>
+                  <div [style.font-size.em]='2'>Mascotas</div>
+              </th>
+          </tr>
+          <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Propietario</th>
+              <th>Likes</th>
+              <th>Accion</th>
+              <th>Editar</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- ngFor en el click del renglon se ejecuta un metodo, se le pasa la mascota actual -->
+          <tr *ngFor="let mascota of mascotas; let i = index">
+              <td>{{mascota.name}}</td>
+              <td>{{mascota.description}}</td>
+              <td>{{getOwner(mascota.user)}}</td>
+              <td>{{getQuantity(i)}}</td>
+              <td class="text" id="title">
+                  <a (click)="manageLike(mascota._id)"> {{ getName(i) ? "Quitar Like" : "Dar Like" }} </a>
+                </td>
+              <td class="text">
+                  <img src="/assets/edit.png" name="editar" [routerLink]="['/nuevaMascota/' + mascota._id ]" />
+              </td>
+          </tr>
+      </tbody>
+  </table>
 </div>

@@ -25,7 +25,8 @@ export function read(req: IReadRequest, res: express.Response) {
  *      "name": "Nombre del grupo",
  *      "description": "Descripción del grupo",
  *      "owner": "Id de usuario",
- *      "users": [user]
+ *      "owner_name": "Nombre del creador",
+ *      "users": "Id de Usuarios"
  *      "updated": date (DD/MM/YYYY),
  *      "created": date (DD/MM/YYYY),
  *      "enabled": [true|false]
@@ -96,6 +97,7 @@ export function update(req: IUpdateRequest, res: express.Response) {
   if (!group) {
     group = new Group();
     group.owner = req.user._id;
+    group.users.push(req.user._id);
   }
 
   if (req.body.name) {
@@ -104,10 +106,17 @@ export function update(req: IUpdateRequest, res: express.Response) {
   if (req.body.description) {
     group.description = req.body.description;
   }
+  if (req.body.owner_name) {
+    group.owner_name = req.body.owner_name;
+  }
+
+  if (req.body.users != []) {
+    group.users = req.body.users;
+  }
 
   group.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
-
+    console.log(group);
     res.json(group);
   });
 }
@@ -150,7 +159,8 @@ export function remove(req: IRemoveRequest, res: express.Response) {
  *      "name": "Nombre del Grupo",
  *      "description": "Descripción del Grupo",
  *      "owner": "Id de usuario",
- *      "users": [user],
+ *      "owner_name": "Nombre del creador",
+ *      "users": "Id de Usuarios",
  *      "updated": date (DD/MM/YYYY),
  *      "created": date (DD/MM/YYYY),
  *      "enabled": [true|false]
@@ -163,7 +173,6 @@ export function remove(req: IRemoveRequest, res: express.Response) {
  */
 export function findByCurrentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
   Group.find({
-    user: req.user._id,
     enabled: true
   }).exec(function (err, groups) {
     if (err) return next();

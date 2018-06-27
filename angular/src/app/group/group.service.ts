@@ -5,7 +5,9 @@ import { RestBaseService } from "../tools/rest.tools";
 
 @Injectable()
 export class GroupService extends RestBaseService {
+
   private url = "/group";
+  private profile = "/profile";
 
   constructor(private http: Http) {
     super();
@@ -80,5 +82,6 @@ export interface Group {
   name: string;
   description: string;
   owner: string;
-  users: [string];
+  owner_name: string;
+  users: string[];
 }

@@ -71,7 +71,7 @@ export function findByID(req: IFindByIdRequest, res: express.Response, next: Nex
 }
 
 /**
- * @api {put} /province Crear Provincia
+ * @api {post} /province Crear Provincia
  * @apiName Crear Provincia
  * @apiGroup Provincias
  *
@@ -97,11 +97,6 @@ export interface IUpdateRequest extends IUserSessionRequest {
   province: IProvince;
 }
 export function validateUpdate(req: IUpdateRequest, res: express.Response, next: NextFunction) {
-  if (req.body.name) {
-    req.check("name", "Hasta 256 caracteres solamente.").isLength({ max: 256 });
-    req.sanitize("name").escape();
-  }
-
   req.getValidationResult().then(function (result) {
     if (!result.isEmpty()) {
       return errorHandler.handleExpressValidationError(res, result);
@@ -110,14 +105,9 @@ export function validateUpdate(req: IUpdateRequest, res: express.Response, next:
   });
 }
 export function update(req: IUpdateRequest, res: express.Response) {
-  let province = <IProvince>req.province;
-  if (!province) {
-    province = new Province();
-  }
-
-  if (req.body.name) {
-    province.name = req.body.name;
-  }
+  // tslint:disable-next-line:prefer-const
+  let province = new Province();
+  province.name = req.body.name;
 
   province.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);

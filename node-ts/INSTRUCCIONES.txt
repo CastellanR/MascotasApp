@@ -1,0 +1,13 @@
+REQUISITOS: 
+    - mongodb-tools
+    - docker
+    - docker-compose
+
+--LEVANTAR LAS IMAGENES DE MONGODB Y REDIS A TRAVES DE DOCKER
+En la carpeta donde nos encontramos, abrir terminal y ejecutar el siguiente comando:
+$ docker-compose up
+
+
+--IMPORTAR DATOS SEMILLAS A LA BASE DE DATOS
+Dirigirse a la carpeta Database-Seeds y ejecutar en la terminal, ubicado en esa carpeta, el siguiente comando para importar la informacion a la base de datos
+	$ mongorestore --gzip

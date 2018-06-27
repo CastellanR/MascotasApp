@@ -6,10 +6,11 @@ export interface ILike extends mongoose.Document {
   from: mongoose.Schema.Types.ObjectId;
   to: mongoose.Schema.Types.ObjectId;
   created: Number;
+  enabled: Boolean;
 }
 
 /**
- * Esquema de Mascotas
+ * Esquema de Like
  */
 export let LikeSchema = new mongoose.Schema({
   from: {
@@ -23,6 +24,10 @@ export let LikeSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
+  enabled: {
+    type: Boolean,
+    default: true,
+  }
 }, { collection: "likes" });
 
 /**

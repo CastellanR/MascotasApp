@@ -1,4 +1,8 @@
 <div class="container">
+  <div class="buttons">
+    <button class="btn btn-success" [routerLink]="['/nuevoGrupo']">Nuevo</button>
+    <button class="btn btn-default" [routerLink]="['/']">Volver</button>
+  </div>
   <table cellspacing='0'>
       <thead>
           <tr>
@@ -9,21 +13,25 @@
           <tr>
               <th>Nombre</th>
               <th>Descripcion</th>
+              <th>Propietario</th>
               <th>Usuarios</th>
-              <th></th>
+              <th>Suscripcion</th>
+              <th>Editar</th>
           </tr>
       </thead>
       <tbody>
           <tr *ngFor="let group of groups">
               <td>{{group.name}}</td>
               <td>{{group.description}}</td>
-              <td>{{group.users}}</td>
+              <td>{{ group.owner_name }}</td>
+              <td>{{ group.users.length }}</td>
+              <td class="text" id="title">
+                <a (click)="manageMembership(group._id)">{{ isMember(group.users) ? "Salir" : "Ingresar" }}</a>
+              </td>
               <td class="text">
                   <img src="/assets/edit.png" name="editar" [routerLink]="['/nuevoGrupo/' + group._id ]" />
               </td>
           </tr>
       </tbody>
   </table>
-  <button class="btn btn-success" [routerLink]="['/nuevoGrupo']">Nueva</button>
-  <button class="btn btn-default" [routerLink]="['/']">Volver</button>
 </div>

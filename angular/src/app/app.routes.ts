@@ -8,6 +8,8 @@ import { PerfilComponent } from "./perfil/perfil.component";
 import { RegistrarUsuarioComponent } from "./usuario/registrar-usuario.component";
 import { UsuarioService } from "./usuario/usuario.service";
 import { WelcomeComponent } from "./welcome/welcome.component";
+import { MessageComponent } from "./message/message.component";
+import { NewMessageComponent } from "./message/new-message.component";
 
 @Injectable()
 export class LoggedIn implements CanActivate {
@@ -31,6 +33,8 @@ export const routes: Routes = [
     { path: "", component: WelcomeComponent },
     { path: "perfilUsuario", component: PerfilComponent, canActivate: [LoggedIn] },
     { path: "registrarUsuario", component: RegistrarUsuarioComponent },
+    { path: "mensajes", component: MessageComponent},
+    { path: "nuevoMensaje", component: NewMessageComponent},
     { path: "mascotas", component: MascotaComponent, canActivate: [LoggedIn] },
     { path: "nuevaMascota/:id", component: NuevaMascotaComponent, canActivate: [LoggedIn] },
     { path: "nuevaMascota", component: NuevaMascotaComponent, canActivate: [LoggedIn] },

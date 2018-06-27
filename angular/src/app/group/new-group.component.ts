@@ -4,6 +4,7 @@ import * as esLocale from "date-fns/locale/es";
 import * as errorHandler from "../tools/error-handler";
 import { IErrorController } from "../tools/error-handler";
 import { Group, GroupService } from "./group.service";
+import { Usuario, UsuarioService } from "../usuario/usuario.service";
 
 @Component({
   selector: "app-new-group",
@@ -21,6 +22,7 @@ export class NewGroupComponent implements OnInit, IErrorController {
 
   constructor(
     private groupsService: GroupService,
+    private usuarioService: UsuarioService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -29,11 +31,16 @@ export class NewGroupComponent implements OnInit, IErrorController {
       name: "",
       description: "",
       owner: "",
-      users: [""],
+      owner_name: "",
+      users: [],
     };
   }
 
   ngOnInit() {
+    this.usuarioService
+      .getPrincipal()
+      .then(user => (this.group.owner_name = user.name))
+      .catch(error => (this.errorMessage = <any>error));
     this.route.params.subscribe(params => {
       const id = params["id"];
       if (id) {

@@ -28,7 +28,8 @@ export class NuevaMascotaComponent implements OnInit, IErrorController {
       _id: undefined,
       name: "",
       birthDate: "",
-      description: ""
+      description: "",
+      user: "",
     };
   }
 

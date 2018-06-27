@@ -88,6 +88,7 @@ export interface RegistrarUsuario {
 }
 
 export interface Usuario {
+  id: string;
   login: string;
   name: string;
   email: string;

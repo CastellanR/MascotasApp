@@ -8,7 +8,7 @@ import * as errorHandler from "../utils/error.handler";
 import { ILike, Like } from "./like.schema";
 
 /**
- * Retorna los datos del grupo
+ * Retorna los datos del Like
  */
 export interface IReadRequest extends IUserSessionRequest {
   like: ILike;
@@ -61,10 +61,9 @@ export function validateUpdate(req: IUpdateRequest, res: express.Response, next:
 }
 export function update(req: IUpdateRequest, res: express.Response) {
   let like = req.like;
-  if (!like) {
-    like = new Like();
-    like.from = req.user._id;
-  }
+  like = new Like();
+  like.from = req.body.from;
+  like.to = req.body.to;
 
   like.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
@@ -90,19 +89,19 @@ export interface IRemoveRequest extends IUserSessionRequest {
 export function remove(req: IRemoveRequest, res: express.Response) {
   const like = <ILike>req.like;
 
+  like.enabled = false;
   like.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
-
     res.send();
   });
 }
 
 /**
- * @api {get} /like Listar Likes
+ * @api {get} /likes/:id Listar Likes
  * @apiName Listar Likes
  * @apiGroup Likes
  *
- * @apiDescription Obtiene un listado de los Likes.
+ * @apiDescription Obtiene un listado de los likes por mascota.
  *
  * @apiSuccessExample {json} Like
  *  [
@@ -117,24 +116,37 @@ export function remove(req: IRemoveRequest, res: express.Response) {
  * @apiUse 200OK
  * @apiUse OtherErrors
  */
-export function findByCurrentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
+
+
+export function findByPet(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
+  const id = req.params.petId;
   Like.find({
-    from: req.user._id,
+    to: id,
+    enabled: true,
   }).exec(function (err, likes) {
     if (err) return next();
     res.json(likes);
   });
 }
 
-/**
- * Autorización, el único que puede modificar el grupo es el dueño
- */
-export interface IValidateOwnerRequest extends IUserSessionRequest {
+export interface IFindByIdRequest extends express.Request {
   like: ILike;
 }
-export function validateOwner(req: IValidateOwnerRequest, res: express.Response, next: NextFunction) {
-  if (!((req.like.from as any).equals(req.user._id))) {
-    return errorHandler.sendError(res, errorHandler.ERROR_UNAUTHORIZED_METHOD, "User is not authorized");
-  }
-  next();
+
+export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction) {
+  const id = req.params.likeId;
+
+  Like.findOne({
+    _id: escape(id),
+    enabled: true,
+  },
+    function (err, like) {
+      if (err) return errorHandler.handleError(res, err);
+
+      if (!like) {
+        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar el Like " + id);
+      }
+      req.like = like;
+      next();
+    });
 }

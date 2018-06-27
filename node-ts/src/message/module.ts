@@ -8,12 +8,10 @@ export function init(app: Express) {
   // Rutas de acceso a mascotas
   app
     .route("/message")
-    .get(passport.authenticate("jwt", { session: false }), message.findByCurrentUser)
+    .get(passport.authenticate("jwt", { session: false }), message.findAll)
     .post(passport.authenticate("jwt", { session: false }), message.validateUpdate, message.update);
 
   app
     .route("/message/:messageId")
-    .get(message.findByID, message.read)
-    .put(passport.authenticate("jwt", { session: false }), message.findByID, message.validateOwner, message.validateUpdate, message.update)
-    .delete(passport.authenticate("jwt", { session: false }), message.findByID, message.validateOwner, message.remove);
+    .delete(passport.authenticate("jwt", { session: false }), message.findByID, message.remove);
 }

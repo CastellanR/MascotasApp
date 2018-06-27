@@ -28,6 +28,9 @@ import { UsuarioService } from "./usuario/usuario.service";
 import { PerfilService } from "./perfil/perfil.service";
 import { ProvinciaService } from "./provincia/provincia.service";
 import { GroupService } from "./group/group.service";
+import { NewMessageComponent } from "./message/new-message.component";
+import { MessageService } from "./message/message.service";
+import { LikeService } from "./mascota/like.service";
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { GroupService } from "./group/group.service";
     GroupComponent,
     NewGroupComponent,
     MessageComponent,
+    NewMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,8 @@ import { GroupService } from "./group/group.service";
   ],
   providers: [
     MascotaService,
+    MessageService,
+    LikeService,
     UsuarioService,
     ProvinciaService,
     PerfilService,

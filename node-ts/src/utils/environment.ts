@@ -18,7 +18,7 @@ export function getConfig(environment: any): Config {
     config = {
       port: process.env.SERVER_PORT || "3000",
       logLevel: process.env.LOG_LEVEL || "debug",
-      mongoDb: process.env.MONGODB || "mongodb://localhost/petdb",
+      mongoDb: process.env.MONGODB || "mongodb://localhost:27017/petdb",
       redisHost: process.env.REDIS_HOST || "127.0.0.1",
       redisPort: Number(process.env.REDIS_PORT || "6379"),
       jwtSecret: process.env.JWT_SECRET || "+b59WQF+kUDr0TGxevzpRV3ixMvyIQuD1O",

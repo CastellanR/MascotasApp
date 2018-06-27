@@ -172,7 +172,6 @@ export function remove(req: IRemoveRequest, res: express.Response) {
  */
 export function findByCurrentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
   Pet.find({
-    user: req.user._id,
     enabled: true
   }).exec(function (err, pets) {
     if (err) return next();

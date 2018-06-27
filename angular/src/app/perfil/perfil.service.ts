@@ -8,6 +8,7 @@ import { UsuarioService } from "../usuario/usuario.service";
 export class PerfilService extends RestBaseService {
   private perfilUrl = "/profile";
   private imagenUrl = "/image";
+  private perfiles = "/profile/all";
 
   constructor(private http: Http, private securityService: UsuarioService) {
     super();
@@ -19,6 +20,16 @@ export class PerfilService extends RestBaseService {
       .toPromise()
       .then(response => {
         return response.json() as Perfil;
+      })
+      .catch(this.handleError);
+  }
+
+  buscarPerfiles(): Promise<Perfil[]> {
+    return this.http
+      .get(PerfilService.serverUrl + this.perfiles, this.getRestHeader())
+      .toPromise()
+      .then(response => {
+        return response.json() as Perfil[];
       })
       .catch(this.handleError);
   }
@@ -63,7 +74,7 @@ export class PerfilService extends RestBaseService {
       .catch(this.handleError);
   }
 }
-
+"use strict";
 export interface Perfil {
   _id: string;
   name: string;
@@ -72,6 +83,7 @@ export interface Perfil {
   address: string;
   phone: string;
   picture: string;
+  user: string;
 }
 
 export interface Image {

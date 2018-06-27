@@ -27,7 +27,6 @@ Server de Masctoas en Node con TypeScript
 	- [Listar Mascota](#listar-mascota)
 	
 - [Mensajes](#mensajes)
-	- [Buscar Mensaje](#buscar-mensaje)
 	- [Crear Mensaje](#crear-mensaje)
 	- [Eliminar Mensaje](#eliminar-mensaje)
 	- [Listar Mensajes](#listar-mensajes)
@@ -85,8 +84,9 @@ Grupo
 {
   "name": "Nombre del grupo",
   "description": "Descripción del grupo",
-  "owner": "Nombre de usuario",
-  "users": [user]
+  "owner": "Id de usuario",
+  "owner_name": "Nombre del creador",
+  "users": "Id de Usuarios"
   "updated": date (DD/MM/YYYY),
   "created": date (DD/MM/YYYY),
   "enabled": [true|false]
@@ -160,8 +160,9 @@ Grupo
 {
   "name": "Nombre del grupo",
   "description": "Descripción del grupo",
-  "owner": "Nombre de usuario",
-  "users": [user]
+  "owner": "Id de usuario",
+  "owner_name": "Nombre del creador",
+  "users": "Id de Usuarios"
   "updated": date (DD/MM/YYYY),
   "created": date (DD/MM/YYYY),
   "enabled": [true|false]
@@ -243,8 +244,9 @@ Grupo
 {
   "name": "Nombre del grupo",
   "description": "Descripción del grupo",
-  "owner": "Nombre de usuario",
-  "users": [user]
+  "owner": "Id de usuario",
+  "owner_name": "Nombre del creador",
+  "users": "Id de Usuarios"
   "updated": date (DD/MM/YYYY),
   "created": date (DD/MM/YYYY),
   "enabled": [true|false]
@@ -372,7 +374,8 @@ Grupo
     "name": "Nombre del Grupo",
     "description": "Descripción del Grupo",
     "owner": "Id de usuario",
-    "users": [user],
+    "owner_name": "Nombre del creador",
+    "users": "Id de Usuarios",
     "updated": date (DD/MM/YYYY),
     "created": date (DD/MM/YYYY),
     "enabled": [true|false]
@@ -696,9 +699,9 @@ HTTP/1.1 Header X-Status-Reason: {Message}
 ## <a name='listar-likes'></a> Listar Likes
 [Back to top](#top)
 
-<p>Obtiene un listado de los Likes.</p>
+<p>Obtiene un listado de los likes por mascota.</p>
 
-	GET /like
+	GET /likes/:id
 
 
 
@@ -1122,79 +1125,6 @@ HTTP/1.1 Header X-Status-Reason: {Message}
 ```
 # <a name='mensajes'></a> Mensajes
 
-## <a name='buscar-mensaje'></a> Buscar Mensaje
-[Back to top](#top)
-
-<p>Busca un Mensaje por id.</p>
-
-	PUT /message/:messageId
-
-
-
-### Examples
-
-Autorización
-
-```
-Authorization=bearer {token}
-```
-
-### Success Response
-
-Mensaje
-
-```
-{
-  "content": "Contenido del mensaje",
-  "from": "Id de usuario",
-  "to": "Id de usuario",
-  "updated": date (DD/MM/YYYY),
-  "created": date (DD/MM/YYYY),
-}
-```
-
-
-### Error Response
-
-401 Unauthorized
-
-```
-HTTP/1.1 401 Unauthorized Method
-```
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-HTTP/1.1 Header X-Status-Reason: {Message}
-{
-   "messages" : [
-     {
-       "path" : "propertyName",
-       "message" : "Error Text"
-     },
-     ...
-  ]
-}
-```
-404 Not Found
-
-```
-HTTP/1.1 404 Not Found
-HTTP/1.1 Header X-Status-Reason: {Message}
-{
-   "url" : "http://...",
-   "error" : "Not Found"
-}
-```
-500 Server Error
-
-```
-HTTP/1.1 500 Internal Server Error
-HTTP/1.1 Header X-Status-Reason: {Message}
-{
-   "error" : "Not Found"
-}
-```
 ## <a name='crear-mensaje'></a> Crear Mensaje
 [Back to top](#top)
 
@@ -1228,9 +1158,12 @@ Mensaje
 {
   "content": "Contenido del mensaje",
   "from": "Id de usuario",
+  "from_user": "Nombre de usuario",
   "to": "Id de usuario",
+  "to_user": "Nombre de usuario",
   "updated": date (DD/MM/YYYY),
   "created": date (DD/MM/YYYY),
+  "enabled": [true|false]
 }
 ```
 
@@ -1354,9 +1287,12 @@ Mensaje
   {
     "content": "Contenido del Mensaje",
     "from": "Id de usuario",
+    "from_user": "Nombre de usuario",
     "to": "Id de usuario",
+    "to_user": "Nombre de usuario",
     "updated": date (DD/MM/YYYY),
     "created": date (DD/MM/YYYY),
+    "enabled": [true|false]
   }, ...
 ]
 ```
@@ -1572,7 +1508,7 @@ HTTP/1.1 Header X-Status-Reason: {Message}
 
 <p>Crea o actualiza una provincia.</p>
 
-	PUT /province
+	POST /province
 
 
 

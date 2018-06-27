@@ -12,7 +12,7 @@ export function init(app: Express) {
   // Rutas del controlador
   app.route("/province")
     .get(province.list)
-    .put(passport.authenticate("jwt", { session: false }), security.validateAdminRole, province.validateUpdate, province.update);
+    .post(passport.authenticate("jwt", { session: false }), province.validateUpdate, province.update);
 
   app.route("/province/:provinceId")
     .get(province.findByID, province.read)

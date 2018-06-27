@@ -80,4 +80,5 @@ export interface Mascota {
   name: string;
   birthDate: string;
   description: string;
+  user: string;
 }

@@ -8,7 +8,7 @@ import * as errorHandler from "../utils/error.handler";
 import { IMessage, Message } from "./message.schema";
 
 /**
- * Retorna los datos del grupo
+ * Retorna los datos del mensaje
  */
 export interface IReadRequest extends IUserSessionRequest {
   message: IMessage;
@@ -24,9 +24,12 @@ export function read(req: IReadRequest, res: express.Response) {
  *    {
  *      "content": "Contenido del mensaje",
  *      "from": "Id de usuario",
+ *      "from_user": "Nombre de usuario",
  *      "to": "Id de usuario",
+ *      "to_user": "Nombre de usuario",
  *      "updated": date (DD/MM/YYYY),
  *      "created": date (DD/MM/YYYY),
+ *      "enabled": [true|false]
  *    }
  */
 
@@ -67,14 +70,13 @@ export function validateUpdate(req: IUpdateRequest, res: express.Response, next:
   });
 }
 export function update(req: IUpdateRequest, res: express.Response) {
-  let message = req.message;
-  if (!message) {
-    message = new Message();
-    message.from = req.user._id;
-  }
-  if (req.body.content) {
-    message.content = req.body.content;
-  }
+  // tslint:disable-next-line:prefer-const
+  let message = new Message();
+  message.from = req.user._id;
+  message.from_user = req.body.from_user;
+  message.to = req.body.to;
+  message.to_user = req.body.to_user;
+  message.content = req.body.content;
 
   message.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
@@ -100,9 +102,9 @@ export interface IRemoveRequest extends IUserSessionRequest {
 export function remove(req: IRemoveRequest, res: express.Response) {
   const message = <IMessage>req.message;
 
+  message.enabled = false;
   message.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
-
     res.send();
   });
 }
@@ -119,9 +121,12 @@ export function remove(req: IRemoveRequest, res: express.Response) {
  *    {
  *      "content": "Contenido del Mensaje",
  *      "from": "Id de usuario",
+ *      "from_user": "Nombre de usuario",
  *      "to": "Id de usuario",
+ *      "to_user": "Nombre de usuario",
  *      "updated": date (DD/MM/YYYY),
  *      "created": date (DD/MM/YYYY),
+ *      "enabled": [true|false]
  *    }, ...
  *  ]
  *
@@ -129,28 +134,15 @@ export function remove(req: IRemoveRequest, res: express.Response) {
  * @apiUse 200OK
  * @apiUse OtherErrors
  */
-export function findByCurrentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
+export function findAll(req: IReadRequest, res: express.Response, next: NextFunction) {
   Message.find({
-    from: req.user._id,
+    enabled: true
   }).exec(function (err, messages) {
     if (err) return next();
     res.json(messages);
   });
 }
 
-/**
- * @api {put} /message/:messageId Buscar Mensaje
- * @apiName Buscar Mensaje
- * @apiGroup Mensajes
- *
- * @apiDescription Busca un Mensaje por id.
- *
- * @apiUse IMessageResponse
- *
- * @apiUse AuthHeader
- * @apiUse ParamValidationErrors
- * @apiUse OtherErrors
- */
 export interface IFindByIdRequest extends express.Request {
   message: IMessage;
 }
@@ -159,29 +151,15 @@ export function findByID(req: IFindByIdRequest, res: express.Response, next: Nex
 
   Message.findOne({
     _id: escape(id),
-    enabled: true
+    enabled: true,
   },
     function (err, message) {
       if (err) return errorHandler.handleError(res, err);
 
       if (!message) {
-        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar el grupo " + id);
+        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar el mensaje " + id);
       }
-
       req.message = message;
       next();
     });
-}
-
-/**
- * Autorización, el único que puede modificar el grupo es el dueño
- */
-export interface IValidateOwnerRequest extends IUserSessionRequest {
-  message: IMessage;
-}
-export function validateOwner(req: IValidateOwnerRequest, res: express.Response, next: NextFunction) {
-  if (!((req.message.from as any).equals(req.user._id))) {
-    return errorHandler.sendError(res, errorHandler.ERROR_UNAUTHORIZED_METHOD, "User is not authorized");
-  }
-  next();
 }
